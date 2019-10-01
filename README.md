@@ -1,13 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# DataKindR
+# DataKindR <img src='man/figures/logo.png' align="right" height="139" />
 
 <!-- badges: start -->
 
 <!-- badges: end -->
-
-# DataKindR <img src='man/figures/logo.png' align="right" height="139" />
 
 DataKind volunteers often need access to specific data or techniques in
 a DataDive or other project.
