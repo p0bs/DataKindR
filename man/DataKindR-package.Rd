@@ -6,7 +6,15 @@
 \alias{DataKindR-package}
 \title{DataKindR: Provides Helper Functions for DataKind Volunteers}
 \description{
-DataKind volunteers often need access to specific data or techniques in a DataDive or other project. This package seeks to make this access easier.
+DataKind volunteers often need access to specific data or techniques in a DataDive or other project. This package seeks to simplify access to these resources.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/p0bs/DataKindR}
+  \item Report bugs at \url{https://github.com/p0bs/DataKindR/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Robin Penfold \email{robin.penfold@icloud.com}
