@@ -6,6 +6,8 @@
 \alias{DataKindR-package}
 \title{DataKindR: Provides Helper Functions for DataKind Volunteers}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 DataKind volunteers often need access to specific data or techniques in a DataDive or other project. This package seeks to simplify access to these resources.
 }
 \seealso{
