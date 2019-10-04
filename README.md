@@ -27,9 +27,11 @@ devtools::install_github("p0bs/DataKindR")
 
 Here are the types of data and technique that DataKindR will provide:
 
-  - Constituency-level data in the UK
-  - Country dedupe and join approaches
-  - Summarising data
+  - Constituency-level data in the UK (the `parlitools` package) but
+    adding a join for short postcodes and demographic data
+  - Country de-duplication and joining approaches (the `countrycode`
+    package)
+  - Summarising data (the `skimr` package)
 
 If you can think of anything else, feel free to contribute to this
 package. Thanks.
