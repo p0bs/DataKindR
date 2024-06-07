@@ -6,11 +6,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-DataKind volunteers often need access to specific data or techniques in
-a DataDive or other project.
+<br/>
 
-The goal of DataKindR is to make it easier for volunteers to access
-these resources.
+DataKind volunteers often need access to specific data or techniques in
+a DataDive or other project. The goal of DataKindR is to make it easier
+for volunteers to access these resources.
 
 <br/>
 
@@ -30,7 +30,6 @@ pak::pak("p0bs/DataKindR")
 Here are the types of data and technique that DataKindR will provide:
 
 - Postcode cleansing
-- API helper functions to access demographic data by postcode
 
 <br/>
 
