@@ -22,8 +22,8 @@ This function cleans UK postcode data before returning the relevant section (suc
 }
 \examples{
 postcodes(
-  postcode_value = 'ME1 2RE',
-  postcode_type = 'full'
+  postcode_value = 'ME1 2re ',
+  postcode_type = 'region'
   )
 
 }

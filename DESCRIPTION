@@ -16,7 +16,8 @@ BugReports: https://github.com/p0bs/DataKindR/issues
 Depends:
     R (>= 4.1)
 Imports: 
-    rlang
+    rlang,
+    stringr
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

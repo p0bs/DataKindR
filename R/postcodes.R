@@ -13,8 +13,8 @@
 #' @export
 #' @examples
 #' postcodes(
-#'   postcode_value = 'ME1 2RE',
-#'   postcode_type = 'full'
+#'   postcode_value = 'ME1 2re ',
+#'   postcode_type = 'region'
 #'   )
 #'
 #' @importFrom rlang .data
@@ -35,6 +35,23 @@ postcodes <- function(postcode_value, postcode_type = "full"){
 
   # Main functions ----
 
-  return(postcode_value)
+  postcode_tidier <- postcode_value |>
+    stringr::str_trim() |>
+    stringr::str_to_upper()
+
+  postcode_raw <- ifelse(postcode_tidier == "N/A", NA_character_, postcode_tidier)
+  postcode_locale <- stringr::str_extract(postcode_raw, "^[:alpha:]+[:digit:]+[:alpha:]?\\s[:digit:]")
+  postcode_area <- stringr::str_extract(postcode_raw, "^[:alpha:]+[:digit:]+[:alpha:]?")
+  postcode_region <- stringr::str_extract(postcode_area, "^[:alpha:]+")
+
+  postcode_output <- switch (
+    postcode_type,
+    "full" = postcode_raw,
+    "region" = postcode_region,
+    "area" = postcode_area,
+    "locale" = postcode_locale
+    )
+
+  return(postcode_output)
 
 }
