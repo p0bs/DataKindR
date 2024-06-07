@@ -13,5 +13,10 @@ LazyData: true
 RoxygenNote: 7.3.1
 URL: https://github.com/p0bs/DataKindR, https://p0bs.github.io/DataKindR/
 BugReports: https://github.com/p0bs/DataKindR/issues
+Depends:
+    R (>= 4.1)
+Imports: 
+    rlang
 Suggests: 
-    testthat
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
