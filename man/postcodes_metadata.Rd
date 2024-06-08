@@ -7,10 +7,10 @@
 postcodes_metadata(postcode_value)
 }
 \arguments{
-\item{postcode_value}{The postcode data to be cleaned (in the form of 'N1 1AA', 'ME1 2RE' or 'TN12 0QS').}
+\item{postcode_value}{The postcode data to be cleaned (in the form of 'N1 1AA', 'ME1 2RE' or 'TN12 0QS'). To clean this data, you could pass it through the `postcodes` function in this package.}
 }
 \description{
-This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, County, Latitude, Longitude, Deprivation Index and Constituency.
+This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, Latitude, Longitude, Deprivation Index and Constituency.
 }
 \examples{
 \dontrun{
@@ -18,6 +18,5 @@ postcodes_metadata(
   postcode_value = 'ME1 2re ',
   )
 }
-
 }
 \keyword{Postcodes}

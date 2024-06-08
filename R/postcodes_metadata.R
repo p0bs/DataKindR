@@ -1,7 +1,7 @@
 #' @title Scrape geographic metadata about UK postcodes
 #'
-#' @description This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, County, Latitude, Longitude, Deprivation Index and Constituency.
-#' @param postcode_value The postcode data to be cleaned (in the form of 'N1 1AA', 'ME1 2RE' or 'TN12 0QS').
+#' @description This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, Latitude, Longitude, Deprivation Index and Constituency.
+#' @param postcode_value The postcode data to be cleaned (in the form of 'N1 1AA', 'ME1 2RE' or 'TN12 0QS'). To clean this data, you could pass it through the `postcodes` function in this package.
 #' @keywords Postcodes
 #' @export
 #' @examples
@@ -10,8 +10,6 @@
 #'   postcode_value = 'ME1 2re ',
 #'   )
 #' }
-#'
-#' @importFrom rlang .data
 
 postcodes_metadata <- function(postcode_value){
 
@@ -19,6 +17,15 @@ postcodes_metadata <- function(postcode_value){
 
   if (!(rlang::is_scalar_character(postcode_value))){
     rlang::abort("postcode must be a single character value.")
+  }
+
+  if (
+    stringr::str_detect(
+      string = postcode_value,
+      pattern = "^[:alpha:]+[:digit:]+[:alpha:]?\\s[:digit:][:alpha:][:alpha:]",
+      negate = TRUE
+    )){
+    rlang::abort("Inapplicable postcode format. Have you tried to clean it using the postcodes function in this package?")
   }
 
   # Main functions ----
@@ -42,8 +49,6 @@ postcodes_metadata <- function(postcode_value){
     pcd = purrr::map_chr(resp_json$data$attributes$pcd, as.character),
     rgn = purrr::map_chr(resp_json$data$attributes$rgn, as.character),
     rgn_name = purrr::map_chr(resp_json$data$attributes$rgn_name, as.character),
-    cty = purrr::map_chr(resp_json$data$attributes$cty, as.character),
-    cty_name = purrr::map_chr(resp_json$data$attributes$cty_name, as.character),
     pcon = purrr::map_chr(resp_json$data$attributes$pcon, as.character),
     pcon_name = purrr::map_chr(resp_json$data$attributes$pcon_name, as.character),
     lsoa21 = purrr::map_chr(resp_json$data$attributes$lsoa21, as.character),
@@ -59,7 +64,7 @@ postcodes_metadata <- function(postcode_value){
     imd = purrr::map_int(resp_json$data$attributes$imd, as.integer),
     lat = purrr::map_dbl(resp_json$data$attributes$location$lat, as.numeric),
     lon = purrr::map_dbl(resp_json$data$attributes$location$lon, as.numeric)
-  )
+    )
 
   return(output_postcodes_metadata)
 
