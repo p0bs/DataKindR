@@ -41,9 +41,10 @@ pak::pak("p0bs/DataKindR")
 
 ## Access to resources
 
-Here are the types of data and technique that DataKindR will provide:
+Whilst this list may grow, DataKindR currently provides:
 
   * Postcode cleansing
+  * Mapping postcodes to other geographical metadata
 
 <br/>
 
