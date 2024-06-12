@@ -13,10 +13,8 @@ postcodes_metadata(postcode_value)
 This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, Latitude, Longitude, Deprivation Index and Constituency.
 }
 \examples{
-\dontrun{
 postcodes_metadata(
-  postcode_value = 'ME1 2re ',
+  postcode_value = "ME1 2RE"
   )
-}
 }
 \keyword{Postcodes}

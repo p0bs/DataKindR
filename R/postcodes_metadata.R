@@ -5,11 +5,9 @@
 #' @keywords Postcodes
 #' @export
 #' @examples
-#' \dontrun{
 #' postcodes_metadata(
-#'   postcode_value = 'ME1 2re ',
+#'   postcode_value = "ME1 2RE"
 #'   )
-#' }
 
 postcodes_metadata <- function(postcode_value){
 
