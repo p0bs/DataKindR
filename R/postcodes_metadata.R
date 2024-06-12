@@ -37,7 +37,7 @@ postcodes_metadata <- function(postcode_value){
     httr2::req_url_path_append(postcode_html) |>
     httr2::req_headers("Accept" = "application/json") |>
     httr2::req_user_agent("DataKindR (https://github.com/p0bs/DataKindR)") |>
-    httr2::req_throttle(10 / 60, realm = "https://findthatpostcode.uk/")
+    httr2::req_throttle(99 / 60, realm = "https://findthatpostcode.uk/")
 
   resp <- req |>
     httr2::req_perform()
