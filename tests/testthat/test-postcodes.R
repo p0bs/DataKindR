@@ -6,6 +6,10 @@ test_that("trivial cases work", {
   expect_equal(postcodes(postcode_trivial, postcode_type = "area"), "ME1")
   expect_equal(postcodes(postcode_trivial, postcode_type = "locale"), "ME1 2")
 
+  expect_equal(postcodes("W1A 1AA"), "W1A 1AA")
+  expect_equal(postcodes("WC1A 1AA"), "WC1A 1AA")
+  expect_equal(postcodes("N1 1AA"), "N1 1AA")
+
 })
 
 test_that("stranger cases work", {
@@ -24,5 +28,13 @@ test_that("stranger cases work", {
   expect_equal(postcodes("TN12 0QS", postcode_type = "region"), "TN")
   expect_equal(postcodes("TN12 0QS", postcode_type = "area"), "TN12")
   expect_equal(postcodes("TN12 0QS", postcode_type = "locale"), "TN12 0")
+
+})
+
+test_that("errors work", {
+
+  expect_true(is.na(postcodes("W1A 12AA")))
+  expect_true(is.na(postcodes("W1A1 2AA")))
+  expect_true(is.na(postcodes("W123 2AA")))
 
 })

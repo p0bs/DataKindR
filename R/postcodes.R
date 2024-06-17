@@ -33,15 +33,34 @@ postcodes <- function(postcode_value, postcode_type = "full"){
     multiple = FALSE)
 
 
-  # Main functions ----
+  # Check for oddities ----
 
   postcode_tidier <- postcode_value |>
     stringr::str_trim() |>
     stringr::str_to_upper()
 
-  postcode_raw <- ifelse(postcode_tidier == "N/A", NA_character_, postcode_tidier)
-  postcode_locale <- stringr::str_extract(postcode_raw, "^[:alpha:]+[:digit:]+[:alpha:]?\\s[:digit:]")
-  postcode_area <- stringr::str_extract(postcode_raw, "^[:alpha:]+[:digit:]+[:alpha:]?")
+  postcode_raw1 <- ifelse(
+    postcode_tidier %in% c("N/A", "NA", "N-A"),
+    NA_character_,
+    postcode_tidier
+    )
+
+  postcode_raw2 <- ifelse(
+    stringr::str_detect(postcode_raw1, pattern = "^[:alpha:]{1,2}[:digit:]{1,2}[:alpha:]?\\s[:digit:]"),
+    postcode_raw1,
+    NA_character_
+    )
+
+  postcode_raw <- ifelse(
+    stringr::str_detect(postcode_raw2, pattern = "\\s[:digit:][:alpha:]{2}$"),
+    postcode_raw2,
+    NA_character_
+    )
+
+  # Main functions ----
+
+  postcode_locale <- stringr::str_extract(postcode_raw, "^[:alpha:]{1,2}[:digit:]{1,2}[:alpha:]?\\s[:digit:]")
+  postcode_area <- stringr::str_extract(postcode_raw, "^[:alpha:]{1,2}[:digit:]{1,2}[:alpha:]?")
   postcode_region <- stringr::str_extract(postcode_area, "^[:alpha:]+")
 
   postcode_output <- switch (
