@@ -1,0 +1,138 @@
+---
+title: "Getting geographic metadata from UK postcodes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{postcodes-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, warning=FALSE, message=FALSE}
+library(DataKindR)
+library(dplyr)
+library(purrr)
+library(tibble)
+library(tidyr)
+```
+
+In this short note, we provide a standard way to get geographic metadata on UK postcodes, using the `postcodes` and `postcodes_metadata` functions in this R package. To do so, we'll create a simple and fictional example.
+
+<br/>
+
+### Our example
+
+We'll imagine a scenario that features five people, each represented in our system by an `id` and a `postcode`. To improve our service, we want to learn more about where these people live.
+
+```{r}
+data <- tibble(
+  id = c("A1", "B1", "B2", "C1", "C2", "C3"),
+  postcode = c("Me1 2re", "W1A 1AA ", "N1", " SW1A 0AA", "XX1 0XX", "sw6 1hs")
+  )
+
+data
+```
+
+<br/>
+
+### Tidying the data
+
+As you can see, some of these postcodes are poorly formatted or incomplete. To tidy them, we'll use the `postcodes` function and exclude missing entries (such as the partial postcode of `N1`).
+
+```{r}
+data_tidy <- data |> 
+  rowwise() |> 
+  mutate(
+    postcode_clean = postcodes(
+      postcode_value = postcode, 
+      postcode_type = "full"
+      )
+    ) |> 
+  ungroup() |> 
+  filter(!is.na(postcode_clean)) |> 
+  rownames_to_column(var = "postcode_number") |> 
+  mutate(postcode_number = as.integer(postcode_number))
+
+data_tidy
+```
+
+These postcodes all now either have the same structure or are missing. As such, we can extract them into a list to use with the postcode API.
+
+```{r}
+list_postcodes <- data_tidy |> 
+  pull(postcode_clean)
+
+list_postcodes
+```
+
+<br/>
+
+### Getting geographic metadata on the clean postcodes
+
+Despite this cleaning, there is still an issue, as the penultimate postcode is correctly formatted but not real. We therefore want to ensure that this postcode (`XX1 0XX`) doesn't cause our entire run to break, thereby stopping us from getting information on our final postcode. To do so, we wrap our API function in the `safely` function from the `purrr` package.
+
+```{r}
+safely_postcodes_metadata <- safely(postcodes_metadata)
+```
+
+We now call the postcode API on this list of postcodes.
+
+```{r}
+metadata_postcodes <- map(
+  .x = list_postcodes, 
+  .f = ~safely_postcodes_metadata(postcode_value = .x)
+  )  
+
+glimpse(metadata_postcodes, width = 90)
+```
+
+What does this output show? Well, it seems that we have result data for the four postcodes that were appropriately formatted and genuine.
+
+We now extract this data, along with metadata on the order of each of the postcodes in the list.
+
+```{r}
+data_meta_postcodes <- tibble(
+  results = metadata_postcodes |> map("result"),
+  error = metadata_postcodes |> map("error")
+  ) |> 
+  rowwise() |> 
+  mutate(results_length = length(results)) |> 
+  rownames_to_column(var = "postcode_number") |> 
+  mutate(postcode_number = as.integer(postcode_number)) |> 
+  filter(results_length == 18) |> 
+  select(postcode_number, results) |> 
+  unnest(results) 
+
+data_meta_postcodes
+```
+
+<br/>
+
+### Presenting our extended data
+
+Finally, we can rejoin the results directly above with our earlier datasets (i.e. `data_tidy` and `data`).
+
+```{r}
+data_full <- data_meta_postcodes |> 
+  left_join(
+    data_tidy, 
+    by = join_by(postcode_number == postcode_number)
+    ) |> 
+  select(-postcode_number, -id)
+
+data_final <- data |> 
+  left_join(
+    data_full, 
+    by = join_by(postcode == postcode)
+    ) |> 
+  select(-postcode_clean) |> 
+  select(id, postcode, everything())
+
+data_final
+```
