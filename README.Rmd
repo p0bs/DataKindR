@@ -41,10 +41,12 @@ pak::pak("p0bs/DataKindR")
 
 ## Access to resources
 
-Whilst this list may grow, DataKindR currently provides:
+Whilst this list could grow, DataKindR currently provides:
 
   * Postcode cleansing
   * Mapping postcodes to other geographical metadata
+
+For an example on how to use these functions, read the 'Getting geographic metadata from UK postcodes' vignette.
 
 <br/>
 
