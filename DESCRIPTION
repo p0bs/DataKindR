@@ -23,5 +23,10 @@ Imports:
     tibble,
     xml2
 Suggests: 
-    testthat (>= 3.0.0)
+    dplyr,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    tidyr
 Config/testthat/edition: 3
+VignetteBuilder: knitr
