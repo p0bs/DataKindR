@@ -101,7 +101,7 @@ we’ll create a simple and fictional example.</p>
 <div class="section level3">
 <h3 id="our-example">Our example<a class="anchor" aria-label="anchor" href="#our-example"></a>
 </h3>
-<p>We’ll imagine a scenario that features five people, each represented
+<p>We’ll imagine a scenario that features six people, each represented
 in our system by an <code>id</code> and a <code>postcode</code>. To
 improve our service, we want to learn more about where these people
 live.</p>
@@ -185,13 +185,13 @@ final postcode. To do so, we wrap our API function in the
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">metadata_postcodes</span>, width <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 5</span></span>
 <span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 18] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   ..$ error : NULL</span></span>
 <span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 18] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   ..$ error : NULL</span></span>
 <span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 18] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   ..$ error : NULL</span></span>
 <span><span class="co">#&gt;  $ :List of 2</span></span>
 <span><span class="co">#&gt;   ..$ result: NULL</span></span>
@@ -209,7 +209,7 @@ final postcode. To do so, we wrap our API function in the
 <span><span class="co">#&gt;   .. ..$ call   : language httr2::req_perform(req)</span></span>
 <span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:6] "httr2_http_404" "httr2_http" "httr2_error" "rlang_error" ...</span></span>
 <span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 18] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   ..$ error : NULL</span></span></code></pre></div>
 <p>What does this output show? Well, it seems that we have result data
 for the four postcodes that were appropriately formatted and
@@ -225,21 +225,22 @@ the postcodes in the list.</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>results_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"postcode_number"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>postcode_number <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">postcode_number</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">results_length</span> <span class="op">==</span> <span class="fl">18</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">results_length</span> <span class="op">==</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">postcode_number</span>, <span class="va">results</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">data_meta_postcodes</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 19</span></span></span>
-<span><span class="co">#&gt;   postcode_number pcd   rgn   rgn_name pcon  pcon_name lsoa21 lsoa21_name msoa21</span></span>
-<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               1 ME1 … E120… South E… E140… Chatham … E0101… Medway 026C E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>               2 W1A … E120… London   E140… Cities o… E0100… Westminste… E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>               3 SW1A… E120… London   E140… Cities o… E0100… Westminste… E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>               5 SW6 … E120… London   E140… Chelsea … E0100… Hammersmit… E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 10 more variables: msoa21_name &lt;chr&gt;, ward &lt;chr&gt;, ward_name &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_code &lt;chr&gt;, oac11_group &lt;chr&gt;, oac11_subgroup &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_supergroup &lt;chr&gt;, imd &lt;int&gt;, lat &lt;dbl&gt;, lon &lt;dbl&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 21</span></span></span>
+<span><span class="co">#&gt;   postcode_number pcd     rgn    rgn_name pcon  pcon_name laua  laua_name lsoa21</span></span>
+<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               1 ME1 2RE E1200… South E… E140… Chatham … E060… Medway    E0101…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>               2 W1A 1AA E1200… London   E140… Cities o… E090… Westmins… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>               3 SW1A0AA E1200… London   E140… Cities o… E090… Westmins… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>               5 SW6 1HS E1200… London   E140… Chelsea … E090… Hammersm… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: lsoa21_name &lt;chr&gt;, msoa21 &lt;chr&gt;, msoa21_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ward &lt;chr&gt;, ward_name &lt;chr&gt;, oac11_code &lt;chr&gt;, oac11_group &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_subgroup &lt;chr&gt;, oac11_supergroup &lt;chr&gt;, imd &lt;int&gt;, lat &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   lon &lt;dbl&gt;</span></span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level3">
@@ -264,18 +265,19 @@ datasets (i.e. <code>data_tidy</code> and <code>data</code>).</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">postcode</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data_final</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 20</span></span></span>
-<span><span class="co">#&gt;   id    postcode  pcd   rgn   rgn_name pcon  pcon_name lsoa21 lsoa21_name msoa21</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A1    <span style="color: #949494;">"</span>Me1 2re<span style="color: #949494;">"</span> ME1 … E120… South E… E140… Chatham … E0101… Medway 026C E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B1    <span style="color: #949494;">"</span>W1A 1AA… W1A … E120… London   E140… Cities o… E0100… Westminste… E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> B2    <span style="color: #949494;">"</span>N1<span style="color: #949494;">"</span>      <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C1    <span style="color: #949494;">"</span> SW1A 0… SW1A… E120… London   E140… Cities o… E0100… Westminste… E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C2    <span style="color: #949494;">"</span>XX1 0XX<span style="color: #949494;">"</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C3    <span style="color: #949494;">"</span>sw6 1hs<span style="color: #949494;">"</span> SW6 … E120… London   E140… Chelsea … E0100… Hammersmit… E0200…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 10 more variables: msoa21_name &lt;chr&gt;, ward &lt;chr&gt;, ward_name &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_code &lt;chr&gt;, oac11_group &lt;chr&gt;, oac11_subgroup &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_supergroup &lt;chr&gt;, imd &lt;int&gt;, lat &lt;dbl&gt;, lon &lt;dbl&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 22</span></span></span>
+<span><span class="co">#&gt;   id    postcode    pcd    rgn   rgn_name pcon  pcon_name laua  laua_name lsoa21</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A1    <span style="color: #949494;">"</span>Me1 2re<span style="color: #949494;">"</span>   ME1 2… E120… South E… E140… Chatham … E060… Medway    E0101…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B1    <span style="color: #949494;">"</span>W1A 1AA <span style="color: #949494;">"</span>  W1A 1… E120… London   E140… Cities o… E090… Westmins… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> B2    <span style="color: #949494;">"</span>N1<span style="color: #949494;">"</span>        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C1    <span style="color: #949494;">"</span> SW1A 0AA<span style="color: #949494;">"</span> SW1A0… E120… London   E140… Cities o… E090… Westmins… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C2    <span style="color: #949494;">"</span>XX1 0XX<span style="color: #949494;">"</span>   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C3    <span style="color: #949494;">"</span>sw6 1hs<span style="color: #949494;">"</span>   SW6 1… E120… London   E140… Chelsea … E090… Hammersm… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: lsoa21_name &lt;chr&gt;, msoa21 &lt;chr&gt;, msoa21_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ward &lt;chr&gt;, ward_name &lt;chr&gt;, oac11_code &lt;chr&gt;, oac11_group &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_subgroup &lt;chr&gt;, oac11_supergroup &lt;chr&gt;, imd &lt;int&gt;, lat &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   lon &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
