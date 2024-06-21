@@ -3,7 +3,7 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   postcodes-vignette: postcodes-vignette.html
-last_built: 2024-06-21T14:06Z
+last_built: 2024-06-21T14:10Z
 urls:
   reference: https://p0bs.github.io/DataKindR/reference
   article: https://p0bs.github.io/DataKindR/articles
