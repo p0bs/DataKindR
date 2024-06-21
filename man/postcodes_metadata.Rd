@@ -10,7 +10,7 @@ postcodes_metadata(postcode_value)
 \item{postcode_value}{The postcode data to be cleaned (in the form of 'N1 1AA', 'ME1 2RE' or 'TN12 0QS'). To clean this data, you could pass it through the `postcodes` function in this package.}
 }
 \description{
-This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, Latitude, Longitude, Deprivation Index and Constituency.
+This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, Latitude, Longitude, Rank of Deprivation Index (out of 32,844 in total) and Constituency.
 }
 \examples{
 postcodes_metadata(

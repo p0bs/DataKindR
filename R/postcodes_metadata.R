@@ -1,6 +1,6 @@
 #' @title Scrape geographic metadata about UK postcodes
 #'
-#' @description This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, Latitude, Longitude, Deprivation Index and Constituency.
+#' @description This function takes clean UK postcode data and returns key geographic metadata. Details include: LSOA, MSOA, Latitude, Longitude, Rank of Deprivation Index (out of 32,844 in total) and Constituency.
 #' @param postcode_value The postcode data to be cleaned (in the form of 'N1 1AA', 'ME1 2RE' or 'TN12 0QS'). To clean this data, you could pass it through the `postcodes` function in this package.
 #' @keywords Postcodes
 #' @export
@@ -49,6 +49,8 @@ postcodes_metadata <- function(postcode_value){
     rgn_name = purrr::map_chr(resp_json$data$attributes$rgn_name, as.character),
     pcon = purrr::map_chr(resp_json$data$attributes$pcon, as.character),
     pcon_name = purrr::map_chr(resp_json$data$attributes$pcon_name, as.character),
+    laua = purrr::map_chr(resp_json$data$attributes$laua, as.character),
+    laua_name = purrr::map_chr(resp_json$data$attributes$laua_name, as.character),
     lsoa21 = purrr::map_chr(resp_json$data$attributes$lsoa21, as.character),
     lsoa21_name = purrr::map_chr(resp_json$data$attributes$lsoa21_name, as.character),
     msoa21 = purrr::map_chr(resp_json$data$attributes$msoa21, as.character),

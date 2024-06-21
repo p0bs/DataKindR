@@ -28,7 +28,7 @@ In this short note, we provide a standard way to get geographic metadata on UK p
 
 ### Our example
 
-We'll imagine a scenario that features five people, each represented in our system by an `id` and a `postcode`. To improve our service, we want to learn more about where these people live.
+We'll imagine a scenario that features six people, each represented in our system by an `id` and a `postcode`. To improve our service, we want to learn more about where these people live.
 
 ```{r}
 data <- tibble(
@@ -105,7 +105,7 @@ data_meta_postcodes <- tibble(
   mutate(results_length = length(results)) |> 
   rownames_to_column(var = "postcode_number") |> 
   mutate(postcode_number = as.integer(postcode_number)) |> 
-  filter(results_length == 18) |> 
+  filter(results_length == 20) |> 
   select(postcode_number, results) |> 
   unnest(results) 
 
