@@ -1,3 +1,8 @@
+# DataKindR 0.1.3
+
+* Fixed bug to reflect recent change in httr2 with regard to url handling improvements
+
+
 # DataKindR 0.1.2
 
 * Update postcodes_metadata to include data on local authorities and the number of `imd` values available
