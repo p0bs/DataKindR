@@ -1,3 +1,8 @@
+# DataKindR 0.1.4
+
+* Simplify vignette
+
+
 # DataKindR 0.1.3
 
 * Fixed bug to reflect recent change in httr2 with regard to url handling improvements
