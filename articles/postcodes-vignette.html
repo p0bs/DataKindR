@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">DataKindR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,32 +58,27 @@
       <img src="../logo.png" class="logo" alt=""><h1>Getting geographic metadata from UK postcodes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/p0bs/DataKindR/blob/v0.1.3/vignettes/postcodes-vignette.Rmd" class="external-link"><code>vignettes/postcodes-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/p0bs/DataKindR/blob/main/vignettes/postcodes-vignette.Rmd" class="external-link"><code>vignettes/postcodes-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>postcodes-vignette.Rmd</code></div>
     </div>
 
     
     
+<p>I now show a standard way to get geographic metadata on UK postcodes,
+using the <code>postcodes</code> and <code>postcodes_metadata</code>
+functions in this package.</p>
+<p><br></p>
+<p>Imagine that we want to know more about where six people live, but we
+only know their <code>id</code> and something about their
+<code>postcode</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/p0bs/DataKindR" class="external-link">DataKindR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></code></pre></div>
-<p>In this short note, we provide a standard way to get geographic
-metadata on UK postcodes, using the <code>postcodes</code> and
-<code>postcodes_metadata</code> functions in this R package. To do so,
-we’ll create a simple and fictional example.</p>
-<p><br></p>
-<div class="section level3">
-<h3 id="our-example">Our example<a class="anchor" aria-label="anchor" href="#our-example"></a>
-</h3>
-<p>We’ll imagine a scenario that features six people, each represented
-in our system by an <code>id</code> and a <code>postcode</code>. To
-improve our service, we want to learn more about where these people
-live.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="st">"B1"</span>, <span class="st">"B2"</span>, <span class="st">"C1"</span>, <span class="st">"C2"</span>, <span class="st">"C3"</span><span class="op">)</span>,</span>
 <span>  postcode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Me1 2re"</span>, <span class="st">"W1A 1AA "</span>, <span class="st">"N1"</span>, <span class="st">" SW1A 0AA"</span>, <span class="st">"XX1 0XX"</span>, <span class="st">"sw6 1hs"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -99,15 +94,15 @@ live.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C2    <span style="color: #949494;">"</span>XX1 0XX<span style="color: #949494;">"</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C3    <span style="color: #949494;">"</span>sw6 1hs<span style="color: #949494;">"</span></span></span></code></pre></div>
 <p><br></p>
-</div>
 <div class="section level3">
-<h3 id="tidying-the-data">Tidying the data<a class="anchor" aria-label="anchor" href="#tidying-the-data"></a>
+<h3 id="tidying-the-postcodes">Tidying the postcodes<a class="anchor" aria-label="anchor" href="#tidying-the-postcodes"></a>
 </h3>
 <p>As you can see, some of these postcodes are poorly formatted or
-incomplete. To tidy them, we’ll use the <code>postcodes</code> function
-and exclude missing entries (such as the partial postcode of
+incomplete. To tidy them, I’ll use the <code>postcodes</code> function
+with a <code>passcode_type</code> parameter of <code>"full"</code>. By
+doing so, we exclude missing entries (such as the partial postcode of
 <code>N1</code>).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_tidy</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rowwise.html" class="external-link">rowwise</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
@@ -116,105 +111,64 @@ and exclude missing entries (such as the partial postcode of
 <span>      postcode_type <span class="op">=</span> <span class="st">"full"</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">postcode_clean</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"postcode_number"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>postcode_number <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">postcode_number</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">data_tidy</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 4</span></span></span>
-<span><span class="co">#&gt;   postcode_number id    postcode    postcode_clean</span></span>
-<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               1 A1    <span style="color: #949494;">"</span>Me1 2re<span style="color: #949494;">"</span>   ME1 2RE       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>               2 B1    <span style="color: #949494;">"</span>W1A 1AA <span style="color: #949494;">"</span>  W1A 1AA       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>               3 C1    <span style="color: #949494;">"</span> SW1A 0AA<span style="color: #949494;">"</span> SW1A 0AA      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>               4 C2    <span style="color: #949494;">"</span>XX1 0XX<span style="color: #949494;">"</span>   XX1 0XX       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>               5 C3    <span style="color: #949494;">"</span>sw6 1hs<span style="color: #949494;">"</span>   SW6 1HS</span></span></code></pre></div>
-<p>These postcodes all now either have the same structure or are
-missing. As such, we can extract them into a list to use with the
-postcode API.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
+<span><span class="co">#&gt;   id    postcode    postcode_clean</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A1    <span style="color: #949494;">"</span>Me1 2re<span style="color: #949494;">"</span>   ME1 2RE       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B1    <span style="color: #949494;">"</span>W1A 1AA <span style="color: #949494;">"</span>  W1A 1AA       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> B2    <span style="color: #949494;">"</span>N1<span style="color: #949494;">"</span>        <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C1    <span style="color: #949494;">"</span> SW1A 0AA<span style="color: #949494;">"</span> SW1A 0AA      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C2    <span style="color: #949494;">"</span>XX1 0XX<span style="color: #949494;">"</span>   XX1 0XX       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C3    <span style="color: #949494;">"</span>sw6 1hs<span style="color: #949494;">"</span>   SW6 1HS</span></span></code></pre></div>
+<p>I then extract the resulting postcodes into a list to use with the
+postcode API. (I chose not to remove <code>NA</code> values in this case
+but you could if many exist.)</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">list_postcodes</span> <span class="op">&lt;-</span> <span class="va">data_tidy</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">postcode_clean</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">list_postcodes</span></span>
-<span><span class="co">#&gt; [1] "ME1 2RE"  "W1A 1AA"  "SW1A 0AA" "XX1 0XX"  "SW6 1HS"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "ME1 2RE"  "W1A 1AA"  NA         "SW1A 0AA" "XX1 0XX"  "SW6 1HS"</span></span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="getting-geographic-metadata-on-the-clean-postcodes">Getting geographic metadata on the clean postcodes<a class="anchor" aria-label="anchor" href="#getting-geographic-metadata-on-the-clean-postcodes"></a>
 </h3>
 <p>Despite this cleaning, there is still an issue, as the penultimate
-postcode is correctly formatted but not real. We therefore want to
-ensure that this postcode (<code>XX1 0XX</code>) doesn’t cause our
-entire run to break, thereby stopping us from getting information on our
-final postcode. To do so, we wrap our API function in the
-<code>safely</code> function from the <code>purrr</code> package.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+postcode is correctly formatted but not real. I therefore want to ensure
+that this postcode (<code>XX1 0XX</code>) doesn’t cause our entire run
+to break, thereby stopping us from getting information on our final
+postcode. To do so, I wrap our API function in the <code>safely</code>
+function from the <code>purrr</code> package.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">safely_postcodes_metadata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/safely.html" class="external-link">safely</a></span><span class="op">(</span><span class="va">postcodes_metadata</span><span class="op">)</span></span></code></pre></div>
-<p>We now call the postcode API on this list of postcodes.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>I now call the postcode API on this list of postcodes. I then extract
+only the results of this call, before reshaping them.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">metadata_postcodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span></span>
 <span>  .x <span class="op">=</span> <span class="va">list_postcodes</span>, </span>
 <span>  .f <span class="op">=</span> <span class="op">~</span><span class="fu">safely_postcodes_metadata</span><span class="op">(</span>postcode_value <span class="op">=</span> <span class="va">.x</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>  </span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">metadata_postcodes</span>, width <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span>
-<span><span class="co">#&gt; List of 5</span></span>
-<span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ error : NULL</span></span>
-<span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ error : NULL</span></span>
-<span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ error : NULL</span></span>
-<span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: NULL</span></span>
-<span><span class="co">#&gt;   ..$ error :List of 9</span></span>
-<span><span class="co">#&gt;   .. ..$ message       : chr "HTTP 404 Not Found."</span></span>
-<span><span class="co">#&gt;   .. ..$ trace         :Classes 'rlang_trace', 'rlib_trace', 'tbl' and 'data.frame': 24 obs. of  6 variables:</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "version")= int 2</span></span>
-<span><span class="co">#&gt;   .. ..$ parent        : NULL</span></span>
-<span><span class="co">#&gt;   .. ..$ status        : int 404</span></span>
-<span><span class="co">#&gt;   .. ..$ resp          :List of 8</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "httr2_response"</span></span>
-<span><span class="co">#&gt;   .. ..$ request       :List of 8</span></span>
-<span><span class="co">#&gt;   .. .. ..- attr(*, "class")= chr "httr2_request"</span></span>
-<span><span class="co">#&gt;   .. ..$ rlang         :List of 1</span></span>
-<span><span class="co">#&gt;   .. ..$ call          : language httr2::req_perform(req)</span></span>
-<span><span class="co">#&gt;   .. ..$ use_cli_format: logi TRUE</span></span>
-<span><span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:7] "httr2_http_404" "httr2_http" "httr2_error" "rlang_error" ...</span></span>
-<span><span class="co">#&gt;  $ :List of 2</span></span>
-<span><span class="co">#&gt;   ..$ result: tibble [1 × 20] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ error : NULL</span></span></code></pre></div>
-<p>What does this output show? Well, it seems that we have result data
-for the four postcodes that were appropriately formatted and
-genuine.</p>
-<p>We now extract this data, along with metadata on the order of each of
-the postcodes in the list.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_meta_postcodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>  results <span class="op">=</span> <span class="va">metadata_postcodes</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"result"</span><span class="op">)</span>,</span>
-<span>  error <span class="op">=</span> <span class="va">metadata_postcodes</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"error"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rowwise.html" class="external-link">rowwise</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>results_length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"postcode_number"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>postcode_number <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">postcode_number</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">results_length</span> <span class="op">==</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">postcode_number</span>, <span class="va">results</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span> </span>
+<span><span class="va">data_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  postcode <span class="op">=</span> <span class="va">list_postcodes</span>,</span>
+<span>  results <span class="op">=</span> <span class="va">metadata_postcodes</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"result"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">results</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">data_meta_postcodes</span></span>
+<span><span class="va">data_out</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 21</span></span></span>
-<span><span class="co">#&gt;   postcode_number pcd     rgn    rgn_name pcon  pcon_name laua  laua_name lsoa21</span></span>
-<span><span class="co">#&gt;             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>               1 ME1 2RE E1200… South E… E140… Chatham … E060… Medway    E0101…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>               2 W1A 1AA E1200… London   E140… Cities o… E090… Westmins… E0100…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>               3 SW1A0AA E1200… London   E140… Cities o… E090… Westmins… E0100…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>               5 SW6 1HS E1200… London   E140… Chelsea … E090… Hammersm… E0100…</span></span>
+<span><span class="co">#&gt;   postcode pcd     rgn       rgn_name   pcon    pcon_name laua  laua_name lsoa21</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> ME1 2RE  ME1 2RE E12000008 South East E14001… Chatham … E060… Medway    E0101…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> W1A 1AA  W1A 1AA E12000007 London     E14001… Cities o… E090… Westmins… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> SW1A 0AA SW1A0AA E12000007 London     E14001… Cities o… E090… Westmins… E0100…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> SW6 1HS  SW6 1HS E12000007 London     E14001… Chelsea … E090… Hammersm… E0100…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: lsoa21_name &lt;chr&gt;, msoa21 &lt;chr&gt;, msoa21_name &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ward &lt;chr&gt;, ward_name &lt;chr&gt;, oac11_code &lt;chr&gt;, oac11_group &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   oac11_subgroup &lt;chr&gt;, oac11_supergroup &lt;chr&gt;, imd &lt;int&gt;, lat &lt;dbl&gt;,</span></span></span>
@@ -224,38 +178,27 @@ the postcodes in the list.</p>
 <div class="section level3">
 <h3 id="presenting-our-extended-data">Presenting our extended data<a class="anchor" aria-label="anchor" href="#presenting-our-extended-data"></a>
 </h3>
-<p>Finally, we can rejoin the results directly above with our earlier
-datasets (i.e. <code>data_tidy</code> and <code>data</code>).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_full</span> <span class="op">&lt;-</span> <span class="va">data_meta_postcodes</span> <span class="op">|&gt;</span> </span>
+<p>Finally, I can rejoin the results directly above with our earlier
+data.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_tidy</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
-<span>    <span class="va">data_tidy</span>, </span>
-<span>    by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html" class="external-link">join_by</a></span><span class="op">(</span><span class="va">postcode_number</span> <span class="op">==</span> <span class="va">postcode_number</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">postcode_number</span>, <span class="op">-</span><span class="va">id</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">data_final</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
-<span>    <span class="va">data_full</span>, </span>
-<span>    by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html" class="external-link">join_by</a></span><span class="op">(</span><span class="va">postcode</span> <span class="op">==</span> <span class="va">postcode</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">postcode_clean</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">postcode</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">data_final</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 22</span></span></span>
-<span><span class="co">#&gt;   id    postcode    pcd    rgn   rgn_name pcon  pcon_name laua  laua_name lsoa21</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A1    <span style="color: #949494;">"</span>Me1 2re<span style="color: #949494;">"</span>   ME1 2… E120… South E… E140… Chatham … E060… Medway    E0101…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B1    <span style="color: #949494;">"</span>W1A 1AA <span style="color: #949494;">"</span>  W1A 1… E120… London   E140… Cities o… E090… Westmins… E0100…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> B2    <span style="color: #949494;">"</span>N1<span style="color: #949494;">"</span>        <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C1    <span style="color: #949494;">"</span> SW1A 0AA<span style="color: #949494;">"</span> SW1A0… E120… London   E140… Cities o… E090… Westmins… E0100…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C2    <span style="color: #949494;">"</span>XX1 0XX<span style="color: #949494;">"</span>   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C3    <span style="color: #949494;">"</span>sw6 1hs<span style="color: #949494;">"</span>   SW6 1… E120… London   E140… Chelsea … E090… Hammersm… E0100…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12 more variables: lsoa21_name &lt;chr&gt;, msoa21 &lt;chr&gt;, msoa21_name &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ward &lt;chr&gt;, ward_name &lt;chr&gt;, oac11_code &lt;chr&gt;, oac11_group &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_subgroup &lt;chr&gt;, oac11_supergroup &lt;chr&gt;, imd &lt;int&gt;, lat &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   lon &lt;dbl&gt;</span></span></span></code></pre></div>
+<span>    <span class="va">data_out</span>, </span>
+<span>    by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html" class="external-link">join_by</a></span><span class="op">(</span><span class="va">postcode_clean</span> <span class="op">==</span> <span class="va">postcode</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 23</span></span></span>
+<span><span class="co">#&gt;   id    postcode    postcode_clean pcd     rgn    rgn_name pcon  pcon_name laua </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A1    <span style="color: #949494;">"</span>Me1 2re<span style="color: #949494;">"</span>   ME1 2RE        ME1 2RE E1200… South E… E140… Chatham … E060…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> B1    <span style="color: #949494;">"</span>W1A 1AA <span style="color: #949494;">"</span>  W1A 1AA        W1A 1AA E1200… London   E140… Cities o… E090…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> B2    <span style="color: #949494;">"</span>N1<span style="color: #949494;">"</span>        <span style="color: #BB0000;">NA</span>             <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> C1    <span style="color: #949494;">"</span> SW1A 0AA<span style="color: #949494;">"</span> SW1A 0AA       SW1A0AA E1200… London   E140… Cities o… E090…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> C2    <span style="color: #949494;">"</span>XX1 0XX<span style="color: #949494;">"</span>   XX1 0XX        <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>        <span style="color: #BB0000;">NA</span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> C3    <span style="color: #949494;">"</span>sw6 1hs<span style="color: #949494;">"</span>   SW6 1HS        SW6 1HS E1200… London   E140… Chelsea … E090…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 14 more variables: laua_name &lt;chr&gt;, lsoa21 &lt;chr&gt;, lsoa21_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   msoa21 &lt;chr&gt;, msoa21_name &lt;chr&gt;, ward &lt;chr&gt;, ward_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_code &lt;chr&gt;, oac11_group &lt;chr&gt;, oac11_subgroup &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   oac11_supergroup &lt;chr&gt;, imd &lt;int&gt;, lat &lt;dbl&gt;, lon &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
