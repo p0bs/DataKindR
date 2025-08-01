@@ -8,6 +8,7 @@
 [![R-CMD-check](https://github.com/p0bs/DataKindR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/p0bs/DataKindR/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/p0bs/DataKindR/branch/main/graph/badge.svg)](https://codecov.io/gh/p0bs/DataKindR?branch=main)
+[![DataKindR status badge](https://p0bs.r-universe.dev/DataKindR/badges/version)](https://p0bs.r-universe.dev/DataKindR)
 <!-- badges: end -->
 
 <br/>
