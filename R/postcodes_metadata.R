@@ -29,10 +29,14 @@ postcodes_metadata <- function(postcode_value){
   # Main functions ----
 
   url_main <- "https://findthatpostcode.uk/postcodes/"
-  postcode_html <- xml2::url_escape(postcode_value)
+
+  postcode_plus <- stringr::str_replace_all(
+    string = postcode_value,
+    pattern = "\\s",
+    replacement = "+")
 
   req <- httr2::request(url_main) |>
-    httr2::req_url_path_append(postcode_html) |>
+    httr2::req_url_path_append(postcode_plus) |>
     httr2::req_headers("Accept" = "application/json") |>
     httr2::req_user_agent("DataKindR (https://github.com/p0bs/DataKindR)") |>
     httr2::req_throttle(99 / 60, realm = "https://findthatpostcode.uk/")
