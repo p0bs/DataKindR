@@ -1,39 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/404.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/articles/postcodes-vignette.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/index.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/reference/DataKindR-package.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/reference/postcodes.html</loc>
-  </url>
-  <url>
-    <loc>https://p0bs.github.io/DataKindR/reference/postcodes_metadata.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://p0bs.github.io/DataKindR/404.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/LICENSE-text.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/LICENSE.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/articles/index.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/articles/postcodes-vignette.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/authors.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/index.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/news/index.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/reference/DataKindR-package.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/reference/index.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/reference/postcodes.html</loc></url>
+<url><loc>https://p0bs.github.io/DataKindR/reference/postcodes_metadata.html</loc></url>
 </urlset>
+
